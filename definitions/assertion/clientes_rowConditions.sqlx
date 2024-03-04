@@ -1,0 +1,12 @@
+config { 
+    type: "assertion",
+    dependencies: 'MS_ext_clientes',
+    name: 'raw_MS_clientes_row_condition'
+    }
+
+
+SELECT
+  'cliente_email like "%@%.%"' AS failing_row_condition,
+  *
+FROM ${ref("MS_ext_clientes")}
+WHERE NOT (cliente_email like "%@%.%")
