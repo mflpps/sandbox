@@ -1,0 +1,28 @@
+config {
+    type: 'table',
+    schema: 'managed',
+    name: 'MS_tb_itens_pedidos_clientes',
+    tags: ['managed'],
+    dependencies: ['MS_ext_clientes', 'MS_ext_enderecos', 
+    'MS_ext_itens_produtos_pedidos'],
+     assertions: {
+         nonNull: ["cliente_cpf"]
+     }
+}
+
+
+SELECT 
+    cl.cliente_cpf, cl.cliente_nome, it.pedido_data, 
+    it.produto_nome, it.produto_categoria, it.produto_preco, 
+    it.item_pedido_quantidade, cl.cliente_telefone, cl.cliente_email, 
+    ad.cliente_endereco, ad.cliente_cidade, ad.cliente_estado, 
+    ad.cliente_pais, ad.cliente_cep,it.pedido_status,
+    it.pedido_forma_pagamento
+FROM 
+    ${ref('MS_ext_clientes')} cl
+JOIN 
+    ${ref('MS_ext_enderecos')} ad
+    ON cl.cliente_cpf = ad.cliente_cpf
+JOIN 
+    ${ref('MS_ext_itens_produtos_pedidos')} it
+    ON cl.cliente_cpf = it.pedido_cliente_cpf

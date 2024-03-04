@@ -1,0 +1,31 @@
+config {
+    type: 'view', 
+    schema: 'business',
+    name: 'MS_adm_receita_SP',
+    tags: ['business'],
+    dependencies: ['MS_tb_itens_pedidos_clientes'],
+    bigquery: {
+      labels: {
+        'department': 'business',
+        'status': 'active'
+      }
+    },
+    description: "Tabela com as receitas das cidades de São paulo por dia",
+    columns: {
+      'cliente_cidade': 'Coluna com as cidades do estado de são paulo',
+      'total': 'Cálculo das soma dos pedidos de cada cidade do estado de SP'
+    }
+}
+
+
+SELECT 
+  pedido_data, cliente_cidade,
+  ROUND(SUM(item_pedido_quantidade * produto_preco), 2) as total
+FROM 
+    ${ref('MS_tb_itens_pedidos_clientes')}
+WHERE
+    cliente_estado = 'SP'
+GROUP BY   
+    cliente_cidade, pedido_data
+ORDER BY
+  pedido_data DESC, cliente_cidade DESC
