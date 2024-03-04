@@ -1,0 +1,5 @@
+config { 
+    type: "view",
+    name: 'MS_second_view' 
+    }
+SELECT test from ${ref("MS_first_view")}
