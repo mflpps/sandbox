@@ -1,0 +1,18 @@
+config {
+    type: 'view', 
+    name: 'MS_marketing_clientes',
+    schema: 'business',
+    dependencies: ['MS_tb_itens_pedidos_clientes', 
+        'raw_MS_clientes_row_condition'],
+    tags: ['business']
+}
+
+
+SELECT DISTINCT
+    cliente_nome, cliente_email, cliente_cidade,
+    cliente_estado
+FROM 
+    ${ref('MS_tb_itens_pedidos_clientes')}
+WHERE
+    cliente_cpf NOT IN (SELECT cliente_cpf
+                        FROM ${ref('raw_MS_clientes_row_condition')})
