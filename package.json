@@ -1,0 +1,6 @@
+{
+  "name": "MS_workshop_dataform",
+  "dependencies": {
+    "@dataform/core": "2.4.2"
+  }
+}
