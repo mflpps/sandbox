@@ -1,0 +1,14 @@
+config {
+    type: 'operations',
+    schema: 'raw',
+    name: 'MS_ext_enderecos',
+    hasOutput: true,
+    tags: ['raw']
+}
+
+
+CREATE OR REPLACE EXTERNAL TABLE ${self()} 
+OPTIONS(
+  format = 'parquet',
+  uris = ['gs://wks_data/raw/enderecos/enderecos.parquet']
+);

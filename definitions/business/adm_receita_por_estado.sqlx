@@ -1,0 +1,28 @@
+config {
+    type: 'view', 
+    schema: 'business',
+    name: 'MS_adm_receita_por_estado',
+    tags: ['business'],
+    dependencies: ['MS_tb_itens_pedidos_clientes'],
+    bigquery: {
+      labels: {
+        'department': 'business',
+        'status': 'active'
+      }
+    },
+    description: "Tabela com as receitas dos estados",
+    columns: {
+      'total': 'Cálculo da receita por estado'
+    }
+}
+
+
+SELECT 
+    cliente_estado, 
+    ROUND(SUM(item_pedido_quantidade * produto_preco), 2) as total
+FROM 
+    ${ref('MS_tb_itens_pedidos_clientes')}
+GROUP BY
+    cliente_estado
+ORDER BY
+  total DESC
